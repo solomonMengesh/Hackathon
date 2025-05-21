@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 
 const payrollRecordSchema = new mongoose.Schema({
-  employee: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee', required: true },
-  month: { type: String, required: true },  
+  employee: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee', required: true }, 
   workingDays: { type: Number, required: true },
   earnedSalary: { type: Number, required: true },
   positionAllowance: { type: Number, required: true },

@@ -29,20 +29,7 @@ const PayrollForm = ({ payrollFormData, handlePayrollInputChange, handlePayrollS
               ))}
             </select>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-              Month
-            </label>
-            <Input
-              name="month"
-              value={payrollFormData.month}
-              onChange={handlePayrollInputChange}
-              required
-              placeholder="YYYY-MM"
-              className="w-full p-2 rounded-md glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
-              disabled={isLoading}
-            />
-          </div>
+          
           <div>
             <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
               Working Days
@@ -58,38 +45,8 @@ const PayrollForm = ({ payrollFormData, handlePayrollInputChange, handlePayrollS
               disabled={isLoading}
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-              Position Allowance
-            </label>
-            <Input
-              name="positionAllowance"
-              type="number"
-              value={payrollFormData.positionAllowance}
-              onChange={handlePayrollInputChange}
-              required
-              placeholder="Enter position allowance"
-              className="w-full p-2 rounded-md glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
-              step="0.01"
-              disabled={isLoading}
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-              Transport Allowance
-            </label>
-            <Input
-              name="transportAllowance"
-              type="number"
-              value={payrollFormData.transportAllowance}
-              onChange={handlePayrollInputChange}
-              required
-              placeholder="Enter transport allowance"
-              className="w-full p-2 rounded-md glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
-              step="0.01"
-              disabled={isLoading}
-            />
-          </div>
+          
+          
           <div>
             <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
               Other Commission
