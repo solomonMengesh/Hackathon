@@ -8,7 +8,7 @@ import Employee from '../models/Employee.js';
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-};
+}; 
 
  export const getEmployees = async (req, res) => {
   try {

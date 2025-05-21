@@ -21,6 +21,7 @@ const EmployeesDashboard = () => {
     employmentDate: "",
     basicSalary: "",
     bankAccountNumber: "",
+    email: "",  
   });
   const [showForm, setShowForm] = useState(false);
 
@@ -72,7 +73,7 @@ const EmployeesDashboard = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:5000/api/employees/create",
+        "http://localhost:5000/api/employees/cre",
         formData,
         {
           headers: {
@@ -90,6 +91,7 @@ const EmployeesDashboard = () => {
         employmentDate: "",
         basicSalary: "",
         bankAccountNumber: "",
+        email: "",  
       });
       setShowForm(false);
       fetchEmployees(token);
@@ -196,6 +198,21 @@ const EmployeesDashboard = () => {
                       onChange={handleInputChange}
                       required
                       placeholder="Enter name"
+                      className="glass-input"
+                      disabled={isLoading}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                      Email
+                    </label>
+                    <Input
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="Enter email"
                       className="glass-input"
                       disabled={isLoading}
                     />
@@ -349,6 +366,7 @@ const EmployeesDashboard = () => {
                   <thead className="text-xs uppercase bg-gray-100 dark:bg-gray-700">
                     <tr>
                       <th className="px-4 py-3">Name</th>
+                      <th className="px-4 py-3">Email</th>
                       <th className="px-4 py-3">Gender</th>
                       <th className="px-4 py-3">Position</th>
                       <th className="px-4 py-3">Employment Type</th>
@@ -364,6 +382,7 @@ const EmployeesDashboard = () => {
                         className="border-b dark:border-gray-700"
                       >
                         <td className="px-4 py-3">{employee.name}</td>
+                        <td className="px-4 py-3">{employee.email}</td>
                         <td className="px-4 py-3">{employee.gender}</td>
                         <td className="px-4 py-3">{employee.position}</td>
                         <td className="px-4 py-3">{employee.employmentType}</td>
