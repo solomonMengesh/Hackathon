@@ -13,7 +13,7 @@ const EmployeesDashboard = () => {
   const [user, setUser] = useState(null);
   const [employees, setEmployees] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
+  const [employeeFormData, setEmployeeFormData] = useState({
     name: "",
     gender: "",
     employmentType: "",
@@ -21,9 +21,20 @@ const EmployeesDashboard = () => {
     employmentDate: "",
     basicSalary: "",
     bankAccountNumber: "",
-    email: "",  
+    email: "",
   });
-  const [showForm, setShowForm] = useState(false);
+  const [payrollFormData, setPayrollFormData] = useState({
+    employeeId: "",
+    month: "",
+    workingDays: "",
+    positionAllowance: "",
+    transportAllowance: "",
+    otherCommission: "",
+  });
+  const [payrollData, setPayrollData] = useState(null);
+  const [showEmployeeForm, setShowEmployeeForm] = useState(false);
+  const [showPayrollForm, setShowPayrollForm] = useState(false);
+  const [payrollError, setPayrollError] = useState("");
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -61,12 +72,17 @@ const EmployeesDashboard = () => {
     }
   };
 
-  const handleInputChange = (e) => {
+  const handleEmployeeInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setEmployeeFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handlePayrollInputChange = (e) => {
+    const { name, value } = e.target;
+    setPayrollFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleEmployeeSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -74,7 +90,7 @@ const EmployeesDashboard = () => {
       const token = localStorage.getItem("token");
       await axios.post(
         "http://localhost:5000/api/employees/cre",
-        formData,
+        employeeFormData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -83,7 +99,7 @@ const EmployeesDashboard = () => {
         }
       );
       toast.success("Employee created successfully");
-      setFormData({
+      setEmployeeFormData({
         name: "",
         gender: "",
         employmentType: "",
@@ -91,15 +107,61 @@ const EmployeesDashboard = () => {
         employmentDate: "",
         basicSalary: "",
         bankAccountNumber: "",
-        email: "",  
+        email: "",
       });
-      setShowForm(false);
+      setShowEmployeeForm(false);
       fetchEmployees(token);
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || "Failed to create employee";
       toast.error(errorMessage);
       console.error("Create employee error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePayrollSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setPayrollError("");
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://localhost:5000/api/payroll",
+        {
+          employeeId: payrollFormData.employeeId,
+          month: payrollFormData.month,
+          workingDays: parseInt(payrollFormData.workingDays),
+          positionAllowance: parseFloat(payrollFormData.positionAllowance),
+          transportAllowance: parseFloat(payrollFormData.transportAllowance),
+          otherCommission: parseFloat(payrollFormData.otherCommission),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setPayrollData(response.data);
+      toast.success("Payroll submitted successfully");
+      setPayrollFormData({
+        employeeId: "",
+        month: "",
+        workingDays: "",
+        positionAllowance: "",
+        transportAllowance: "",
+        otherCommission: "",
+      });
+      setShowPayrollForm(false);
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || "Failed to submit payroll";
+      setPayrollError(errorMessage);
+      toast.error(errorMessage);
+      console.error("Submit payroll error:", error);
     } finally {
       setIsLoading(false);
     }
@@ -171,22 +233,30 @@ const EmployeesDashboard = () => {
           transition={{ duration: 0.5 }}
           className="space-y-6"
         >
-          <div className="flex justify-end">
+          <div className="flex justify-end space-x-4">
             <Button
-              onClick={() => setShowForm(!showForm)}
+              onClick={() => setShowEmployeeForm(!showEmployeeForm)}
               className="bg-fidel-500 hover:bg-fidel-600 text-white"
             >
               <Plus size={18} className="mr-2" />
-              {showForm ? "Close Form" : "Add Employee"}
+              {showEmployeeForm ? "Close Employee Form" : "Add Employee"}
+            </Button>
+            <Button
+              onClick={() => setShowPayrollForm(!showPayrollForm)}
+              className="bg-fidel-500 hover:bg-fidel-600 text-white"
+            >
+              <Plus size={18} className="mr-2" />
+              {showPayrollForm ? "Close Payroll Form" : "Add Payroll"}
             </Button>
           </div>
 
-          {showForm && (
+          {/* Employee Form */}
+          {showEmployeeForm && (
             <div className="glass-card p-6 md:p-8 shadow-lg">
               <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">
                 Add New Employee
               </h2>
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleEmployeeSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
@@ -194,8 +264,8 @@ const EmployeesDashboard = () => {
                     </label>
                     <Input
                       name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
+                      value={employeeFormData.name}
+                      onChange={handleEmployeeInputChange}
                       required
                       placeholder="Enter name"
                       className="glass-input"
@@ -209,8 +279,8 @@ const EmployeesDashboard = () => {
                     <Input
                       name="email"
                       type="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
+                      value={employeeFormData.email}
+                      onChange={handleEmployeeInputChange}
                       required
                       placeholder="Enter email"
                       className="glass-input"
@@ -223,8 +293,8 @@ const EmployeesDashboard = () => {
                     </label>
                     <select
                       name="gender"
-                      value={formData.gender}
-                      onChange={handleInputChange}
+                      value={employeeFormData.gender}
+                      onChange={handleEmployeeInputChange}
                       required
                       className="glass-input w-full p-2 rounded-md"
                       disabled={isLoading}
@@ -241,8 +311,8 @@ const EmployeesDashboard = () => {
                     </label>
                     <select
                       name="employmentType"
-                      value={formData.employmentType}
-                      onChange={handleInputChange}
+                      value={employeeFormData.employmentType}
+                      onChange={handleEmployeeInputChange}
                       required
                       className="glass-input w-full p-2 rounded-md"
                       disabled={isLoading}
@@ -258,8 +328,8 @@ const EmployeesDashboard = () => {
                     </label>
                     <select
                       name="position"
-                      value={formData.position}
-                      onChange={handleInputChange}
+                      value={employeeFormData.position}
+                      onChange={handleEmployeeInputChange}
                       required
                       className="glass-input w-full p-2 rounded-md"
                       disabled={isLoading}
@@ -281,8 +351,8 @@ const EmployeesDashboard = () => {
                     <Input
                       name="employmentDate"
                       type="date"
-                      value={formData.employmentDate}
-                      onChange={handleInputChange}
+                      value={employeeFormData.employmentDate}
+                      onChange={handleEmployeeInputChange}
                       required
                       className="glass-input"
                       disabled={isLoading}
@@ -295,8 +365,8 @@ const EmployeesDashboard = () => {
                     <Input
                       name="basicSalary"
                       type="number"
-                      value={formData.basicSalary}
-                      onChange={handleInputChange}
+                      value={employeeFormData.basicSalary}
+                      onChange={handleEmployeeInputChange}
                       required
                       placeholder="Enter salary"
                       className="glass-input"
@@ -309,8 +379,8 @@ const EmployeesDashboard = () => {
                     </label>
                     <Input
                       name="bankAccountNumber"
-                      value={formData.bankAccountNumber}
-                      onChange={handleInputChange}
+                      value={employeeFormData.bankAccountNumber}
+                      onChange={handleEmployeeInputChange}
                       required
                       placeholder="Enter account number"
                       className="glass-input"
@@ -329,6 +399,220 @@ const EmployeesDashboard = () => {
             </div>
           )}
 
+          {/* Payroll Form */}
+          {showPayrollForm && (
+            <div className="glass-card p-6 md:p-8 shadow-lg">
+              <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">
+                Add New Payroll
+              </h2>
+              <form onSubmit={handlePayrollSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                      Employee
+                    </label>
+                    <select
+                      name="employeeId"
+                      value={payrollFormData.employeeId}
+                      onChange={handlePayrollInputChange}
+                      required
+                      className="glass-input w-full p-2 rounded-md"
+                      disabled={isLoading}
+                    >
+                      <option value="">Select Employee</option>
+                      {employees.map((employee) => (
+                        <option key={employee._id} value={employee._id}>
+                          {employee.name} ({employee.email})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                      Month
+                    </label>
+                    <Input
+                      name="month"
+                      value={payrollFormData.month}
+                      onChange={handlePayrollInputChange}
+                      required
+                      placeholder="YYYY-MM"
+                      className="glass-input"
+                      disabled={isLoading}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                      Working Days
+                    </label>
+                    <Input
+                      name="workingDays"
+                      type="number"
+                      value={payrollFormData.workingDays}
+                      onChange={handlePayrollInputChange}
+                      required
+                      placeholder="Enter working days"
+                      className="glass-input"
+                      disabled={isLoading}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                      Position Allowance
+                    </label>
+                    <Input
+                      name="positionAllowance"
+                      type="number"
+                      value={payrollFormData.positionAllowance}
+                      onChange={handlePayrollInputChange}
+                      required
+                      placeholder="Enter position allowance"
+                      className="glass-input"
+                      step="0.01"
+                      disabled={isLoading}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                      Transport Allowance
+                    </label>
+                    <Input
+                      name="transportAllowance"
+                      type="number"
+                      value={payrollFormData.transportAllowance}
+                      onChange={handlePayrollInputChange}
+                      required
+                      placeholder="Enter transport allowance"
+                      className="glass-input"
+                      step="0.01"
+                      disabled={isLoading}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                      Other Commission
+                    </label>
+                    <Input
+                      name="otherCommission"
+                      type="number"
+                      value={payrollFormData.otherCommission}
+                      onChange={handlePayrollInputChange}
+                      required
+                      placeholder="Enter other commission"
+                      className="glass-input"
+                      step="0.01"
+                      disabled={isLoading}
+                    />
+                  </div>
+                </div>
+                <Button
+                  type="submit"
+                  className="bg-fidel-500 hover:bg-fidel-600 text-white"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Submitting..." : "Submit Payroll"}
+                </Button>
+                {payrollError && (
+                  <p className="text-red-500 text-sm mt-2">{payrollError}</p>
+                )}
+              </form>
+            </div>
+          )}
+
+          {/* Payroll Summary */}
+          {payrollData && (
+            <div className="glass-card p-6 md:p-8 shadow-lg">
+              <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">
+                Payroll Summary
+              </h2>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm text-left text-slate-700 dark:text-slate-300">
+                  <tbody>
+                    <tr className="border-b dark:border-gray-700">
+                      <td className="px-4 py-3 font-medium">Employee ID</td>
+                      <td className="px-4 py-3">{payrollData.employee}</td>
+                    </tr>
+                    <tr className="border-b dark:border-gray-700">
+                      <td className="px-4 py-3 font-medium">Month</td>
+                      <td className="px-4 py-3">{payrollData.month}</td>
+                    </tr>
+                    <tr className="border-b dark:border-gray-700">
+                      <td className="px-4 py-3 font-medium">Working Days</td>
+                      <td className="px-4 py-3">{payrollData.workingDays}</td>
+                    </tr>
+                    <tr className="border-b dark:border-gray-700">
+                      <td className="px-4 py-3 font-medium">Earned Salary</td>
+                      <td className="px-4 py-3">
+                        ${payrollData.earnedSalary.toFixed(2)}
+                      </td>
+                    </tr>
+                    <tr className="border-b dark:border-gray-700">
+                      <td className="px-4 py-3 font-medium">Position Allowance</td>
+                      <td className="px-4 py-3">
+                        ${payrollData.positionAllowance.toFixed(2)}
+                      </td>
+                    </tr>
+                    <tr className="border-b dark:border-gray-700">
+                      <td className="px-4 py-3 font-medium">Transport Allowance</td>
+                      <td className="px-4 py-3">
+                        ${payrollData.transportAllowance.toFixed(2)}
+                      </td>
+                    </tr>
+                    <tr className="border-b dark:border-gray-700">
+                      <td className="px-4 py-3 font-medium">Other Commission</td>
+                      <td className="px-4 py-3">
+                        ${payrollData.otherCommission.toFixed(2)}
+                      </td>
+                    </tr>
+                    <tr className="border-b dark:border-gray-700">
+                      <td className="px-4 py-3 font-medium">Gross Pay</td>
+                      <td className="px-4 py-3">${payrollData.grossPay.toFixed(2)}</td>
+                    </tr>
+                    <tr className="border-b dark:border-gray-700">
+                      <td className="px-4 py-3 font-medium">Taxable Income</td>
+                      <td className="px-4 py-3">
+                        ${payrollData.taxableIncome.toFixed(2)}
+                      </td>
+                    </tr>
+                    <tr className="border-b dark:border-gray-700">
+                      <td className="px-4 py-3 font-medium">Tax Deduction</td>
+                      <td className="px-4 py-3">
+                        ${payrollData.deductions.tax.toFixed(2)}
+                      </td>
+                    </tr>
+                    <tr className="border-b dark:border-gray-700">
+                      <td className="px-4 py-3 font-medium">Pension Deduction</td>
+                      <td className="px-4 py-3">
+                        ${payrollData.deductions.pension.toFixed(2)}
+                      </td>
+                    </tr>
+                    <tr className="border-b dark:border-gray-700">
+                      <td className="px-4 py-3 font-medium">Total Deduction</td>
+                      <td className="px-4 py-3">
+                        ${payrollData.totalDeduction.toFixed(2)}
+                      </td>
+                    </tr>
+                    <tr className="border-b dark:border-gray-700">
+                      <td className="px-4 py-3 font-medium">Net Payment</td>
+                      <td className="px-4 py-3">${payrollData.netPayment.toFixed(2)}</td>
+                    </tr>
+                    <tr className="border-b dark:border-gray-700">
+                      <td className="px-4 py-3 font-medium">Status</td>
+                      <td className="px-4 py-3">{payrollData.status}</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 font-medium">Created At</td>
+                      <td className="px-4 py-3">
+                        {new Date(payrollData.createdAt).toLocaleString()}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* Employee List */}
           <div className="glass-card p-6 md:p-8 shadow-lg">
             <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">
               Employee List
