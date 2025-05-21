@@ -11,64 +11,48 @@ const generateToken = (id) => {
 
 export const SignUp = async (req, res) => {
   const { userName, email, password, employeeType, gender, position, startDate } = req.body;
-  console.log("userName", userName)
-  console.log("email", email)
-  console.log("password", password)
-  console.log("gender", gender)
-  console.log("position", position)
-  console.log("startDate", startDate)
 
-  
-  if (!userName) {
-    return res.status(400).json({ error: "Username is required!" });
-  }
-
-  try {
-      // Hash the password before saving
-   try {
   // Validate input
   if (!userName || !email || !password) {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
-  // Check if user exists
-  const existingUser = await UserModel.findOne({ $or: [{ userName }, { email }] });
-  if (existingUser) {
-    const field = existingUser.userName === userName ? "username" : "email";
-    return res.status(409).json({ error: `${field} already exists` });
-  }
+  try {
+    // Check if user exists
+    const existingUser = await UserModel.findOne({ $or: [{ userName }, { email }] });
+    if (existingUser) {
+      const field = existingUser.userName === userName ? "username" : "email";
+      return res.status(409).json({ error: `${field} already exists` });
+    }
 
-  // Create and save user
-  const newUser = new UserModel({
-    userName, 
-    email,
-    password,
-    employeeType,
-    gender,
-    position,
-    startDate
-  });
+    // Create and save user
+    const newUser = new UserModel({
+      userName, 
+      email,
+      password,
+      employeeType,
+      gender,
+      position,
+      startDate
+    });
 
-  await newUser.save();
+    await newUser.save();
 
-  // Respond without password
-  res.status(201).json({
-     newUser // Password is automatically removed by schema's toJSON transform
-  });
+    // Respond without password
+    const userWithoutPassword = newUser.toObject();
+    delete userWithoutPassword.password;
+    
+    return res.status(201).json(userWithoutPassword);
 
-} catch (error) {
-  console.error("Registration error:", error);
-  
-  if (error.code === 11000) {
-    const field = Object.keys(error.keyPattern)[0];
-    res.status(400).json({ error: `${field} must be unique` });
-  } else {
-    res.status(500).json({ error: "Internal server error" });
-  }
-}
   } catch (error) {
- 
-    console.log(error)
+    console.error("Registration error:", error);
+    
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      return res.status(409).json({ error: `${field} already exists` });
+    }
+    
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -77,19 +61,24 @@ export const SignIn = async (req, res, next) => {
   const { email, password, position } = req.body;
 
   try {
-    if (!email || !password || !position) {
+    // Enhanced validation
+    if (!email?.trim() || !password?.trim() || !position?.trim()) {
       return next(ErrorHandler(400, "All fields are required"));
     }
 
-    const user = await UserModel.findOne({ email }).select('+password'); // Explicitly select password
+    // Additional email format validation
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return next(ErrorHandler(400, "Invalid email format"));
+    }
+
+    const user = await UserModel.findOne({ email }).select('+password');
     if (!user) {
       return next(ErrorHandler(401, "Invalid credentials"));
     }
 
-    // Add this check
     if (!user.password) {
       console.error("User has no password set:", user);
-      return next(ErrorHandler(401, "Authentication system error - no password set"));
+      return next(ErrorHandler(401, "Authentication system error"));
     }
 
     const validatedPassword = await bcryptjs.compare(password, user.password);
@@ -98,18 +87,21 @@ export const SignIn = async (req, res, next) => {
     }
 
     if (position !== user.position) {
-      return next(ErrorHandler(403, "You don't have permission to access this position"));
+      return next(ErrorHandler(403, "Invalid position for this user"));
     }
 
-  
-
     const { password: userPassword, ...rest } = user._doc;
-    const token = generateToken(user._id); // Make sure you're generating a token
+    const token = generateToken(user._id);
 
     return res
       .status(200)
-      .cookie("access_token", token, { httpOnly: true })
+      .cookie("access_token", token, { 
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+      })
       .json({
+        success: true,
         user: rest
       });
   } catch (error) {

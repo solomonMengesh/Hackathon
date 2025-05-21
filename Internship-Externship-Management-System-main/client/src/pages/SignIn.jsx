@@ -1,5 +1,5 @@
 import { Alert, Button, Label, Select, TextInput } from "flowbite-react";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import login from '../assets/login.svg'
 import { useDispatch, useSelector } from "react-redux";
@@ -20,18 +20,12 @@ const SignIn = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    position: "", // Default role
+    position: "", // Consistent field name
   });
-
-  // Redirect if user is already authenticated
- 
+  console.log("formData", formData)
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
-
-  const handleRoleChange = (e) => {
-    setFormData({ ...formData, roles: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -43,7 +37,7 @@ const SignIn = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-        credentials: "include", // Include cookies for session handling
+        credentials: "include",
       });
 
       const data = await res.json();
@@ -54,9 +48,9 @@ const SignIn = () => {
 
       dispatch(signinSuccess(data));
       
-      // Store role-specific IDs if needed
-      if (data?.roles && data._id) {
-        localStorage.setItem(`${data.roles}Id`, data._id);
+      // Store position-specific IDs if needed
+      if (data?.position && data._id) {
+        localStorage.setItem(`${data.position}Id`, data._id);
       }
 
       navigate("/");
@@ -71,8 +65,8 @@ const SignIn = () => {
         {/* Left side */}
         <div className="flex-1">
           <span className="">
-                    <img className='hidden dark:block ' src={login} alt='Logo PT. Humpus Karbometil Selulosa' />
-                  </span>
+            <img className='hidden dark:block ' src={login} alt='Logo PT. Humpus Karbometil Selulosa' />
+          </span>
         </div>
 
         {/* Right side - Form */}
@@ -101,25 +95,25 @@ const SignIn = () => {
               minLength="6"
             />
 
-
-              <div className="w-full">
-                              <Label className="text-md font-serif text-zinc-700">Position</Label>
-                              <Select
-                                id="position"
-                                value={formData.position}
-                                onChange={handleRoleChange}
-                                className="font-bold font-serif"
-                              >
-                                <option value="">Select</option>
-                                <option value="CEO">CEO</option>
-                                <option value="COO">COO</option>
-                                <option value="CTO">CTO</option>
-                                <option value="CISO">CISO</option>
-                                <option value="Director">Director</option>
-                                <option value="DeptLead">Dept Lead</option>
-                                <option value="NormalEmployee">Normal Employee</option>
-                              </Select>
-                            </div>
+            <div className="w-full">
+              <Label className="text-md font-serif text-zinc-700">Position</Label>
+              <Select
+                id="position"  // Consistent with state
+                value={formData.position}
+                onChange={handleChange}  // Using the same handler
+                className="font-bold font-serif"
+                required
+              >
+                <option value="">Select</option>
+                <option value="CEO">CEO</option>
+                <option value="COO">COO</option>
+                <option value="CTO">CTO</option>
+                <option value="CISO">CISO</option>
+                <option value="Director">Director</option>
+                <option value="DeptLead">Dept Lead</option>
+                <option value="NormalEmployee">Normal Employee</option>
+              </Select>
+            </div>
 
             <Button
               type="submit"
@@ -142,8 +136,6 @@ const SignIn = () => {
                 {signInError}
               </Alert>
             )}
-
-          
           </form>
 
           <h1 className="mt-5">
