@@ -24,7 +24,7 @@ const EmployeesDashboard = () => {
   });
   const [showForm, setShowForm] = useState(false);
 
-   useEffect(() => {
+  useEffect(() => {
     const storedUser = localStorage.getItem("user");
     const token = localStorage.getItem("token");
 
@@ -45,7 +45,6 @@ const EmployeesDashboard = () => {
     fetchEmployees(token);
   }, [navigate]);
 
-  
   const fetchEmployees = async (token) => {
     setIsLoading(true);
     try {
@@ -61,20 +60,19 @@ const EmployeesDashboard = () => {
     }
   };
 
-   
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-   const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:5000/api/employees/cre", 
+        "http://localhost:5000/api/employees/create",
         formData,
         {
           headers: {
@@ -105,7 +103,7 @@ const EmployeesDashboard = () => {
     }
   };
 
-   const handleLogout = () => {
+  const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     toast.success("Logged out successfully");
@@ -199,6 +197,7 @@ const EmployeesDashboard = () => {
                       required
                       placeholder="Enter name"
                       className="glass-input"
+                      disabled={isLoading}
                     />
                   </div>
                   <div>
@@ -211,6 +210,7 @@ const EmployeesDashboard = () => {
                       onChange={handleInputChange}
                       required
                       className="glass-input w-full p-2 rounded-md"
+                      disabled={isLoading}
                     >
                       <option value="">Select Gender</option>
                       <option value="Male">Male</option>
@@ -228,25 +228,34 @@ const EmployeesDashboard = () => {
                       onChange={handleInputChange}
                       required
                       className="glass-input w-full p-2 rounded-md"
+                      disabled={isLoading}
                     >
                       <option value="">Select Type</option>
                       <option value="Full-time">Full-time</option>
                       <option value="Part-time">Part-time</option>
-                      <option value="Contract">Contract</option>
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                       Position
                     </label>
-                    <Input
+                    <select
                       name="position"
                       value={formData.position}
                       onChange={handleInputChange}
                       required
-                      placeholder="Enter position"
-                      className="glass-input"
-                    />
+                      className="glass-input w-full p-2 rounded-md"
+                      disabled={isLoading}
+                    >
+                      <option value="">Select Position</option>
+                      <option value="CEO">CEO</option>
+                      <option value="COO">COO</option>
+                      <option value="CTO">CTO</option>
+                      <option value="CISO">CISO</option>
+                      <option value="Director">Director</option>
+                      <option value="Dept Lead">Dept Lead</option>
+                      <option value="Normal Employee">Normal Employee</option>
+                    </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
@@ -259,6 +268,7 @@ const EmployeesDashboard = () => {
                       onChange={handleInputChange}
                       required
                       className="glass-input"
+                      disabled={isLoading}
                     />
                   </div>
                   <div>
@@ -273,6 +283,7 @@ const EmployeesDashboard = () => {
                       required
                       placeholder="Enter salary"
                       className="glass-input"
+                      disabled={isLoading}
                     />
                   </div>
                   <div>
@@ -286,6 +297,7 @@ const EmployeesDashboard = () => {
                       required
                       placeholder="Enter account number"
                       className="glass-input"
+                      disabled={isLoading}
                     />
                   </div>
                 </div>
