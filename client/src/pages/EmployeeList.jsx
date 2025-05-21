@@ -32,9 +32,9 @@ const EmployeeList = ({ employees, isLoading }) => {
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left text-slate-700 dark:text-slate-300">
-            <thead className="text-xs uppercase bg-gray-100 dark:bg-gray-700">
+            <thead className="text-xs uppercase bg-gray-100 dark:bg-[#353E88] rounded-r-xl ">
               <tr>
-                <th className="px-4 py-3">Name</th>
+                <th className="px-4 py-3 rounded-l-xl">Name</th>
                 <th className="px-4 py-3">Email</th>
                 <th className="px-4 py-3">Gender</th>
                 <th className="px-4 py-3">Position</th>
@@ -46,7 +46,7 @@ const EmployeeList = ({ employees, isLoading }) => {
             </thead>
             <tbody>
               {employees.map((employee) => (
-                <tr key={employee._id} className="border-b dark:border-gray-700">
+                <tr key={employee._id} className="border-b dark:border-gray-500">
                   <td className="px-4 py-3">{employee.name}</td>
                   <td className="px-4 py-3">{employee.email}</td>
                   <td className="px-4 py-3">{employee.gender}</td>

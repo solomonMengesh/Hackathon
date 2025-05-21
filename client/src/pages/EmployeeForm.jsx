@@ -10,16 +10,16 @@ const EmployeeForm = ({ employeeFormData, handleEmployeeInputChange, handleEmplo
       <form onSubmit={handleEmployeeSubmit} className="space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-              Name
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 bg">
+              Full Name
             </label>
             <Input
               name="name"
               value={employeeFormData.name}
               onChange={handleEmployeeInputChange}
               required
-              placeholder="Enter name"
-              className="glass-input"
+              placeholder="Enter full name"
+              className="glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
               disabled={isLoading}
             />
           </div>
@@ -34,7 +34,7 @@ const EmployeeForm = ({ employeeFormData, handleEmployeeInputChange, handleEmplo
               onChange={handleEmployeeInputChange}
               required
               placeholder="Enter email"
-              className="glass-input"
+              className="glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
               disabled={isLoading}
             />
           </div>
@@ -47,13 +47,13 @@ const EmployeeForm = ({ employeeFormData, handleEmployeeInputChange, handleEmplo
               value={employeeFormData.gender}
               onChange={handleEmployeeInputChange}
               required
-              className="glass-input w-full p-2 rounded-md"
+              className="w-full p-2 rounded-md glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
               disabled={isLoading}
             >
               <option value="">Select Gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
-             
+
             </select>
           </div>
           <div>
@@ -65,7 +65,7 @@ const EmployeeForm = ({ employeeFormData, handleEmployeeInputChange, handleEmplo
               value={employeeFormData.employmentType}
               onChange={handleEmployeeInputChange}
               required
-              className="glass-input w-full p-2 rounded-md"
+              className="w-full p-2 rounded-md glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
               disabled={isLoading}
             >
               <option value="">Select Type</option>
@@ -82,7 +82,7 @@ const EmployeeForm = ({ employeeFormData, handleEmployeeInputChange, handleEmplo
               value={employeeFormData.position}
               onChange={handleEmployeeInputChange}
               required
-              className="glass-input w-full p-2 rounded-md"
+              className="w-full p-2 rounded-md glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
               disabled={isLoading}
             >
               <option value="">Select Position</option>
@@ -96,7 +96,7 @@ const EmployeeForm = ({ employeeFormData, handleEmployeeInputChange, handleEmplo
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 ">
               Employment Date
             </label>
             <Input
@@ -105,7 +105,7 @@ const EmployeeForm = ({ employeeFormData, handleEmployeeInputChange, handleEmplo
               value={employeeFormData.employmentDate}
               onChange={handleEmployeeInputChange}
               required
-              className="glass-input"
+              className="w-full p-2 rounded-md glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
               disabled={isLoading}
             />
           </div>
@@ -120,7 +120,7 @@ const EmployeeForm = ({ employeeFormData, handleEmployeeInputChange, handleEmplo
               onChange={handleEmployeeInputChange}
               required
               placeholder="Enter salary"
-              className="glass-input"
+              className="w-full p-2 rounded-md glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
               disabled={isLoading}
             />
           </div>
@@ -134,14 +134,14 @@ const EmployeeForm = ({ employeeFormData, handleEmployeeInputChange, handleEmplo
               onChange={handleEmployeeInputChange}
               required
               placeholder="Enter account number"
-              className="glass-input"
+              className="w-full p-2 rounded-md glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
               disabled={isLoading}
             />
           </div>
         </div>
         <Button
           type="submit"
-          className="bg-fidel-500 hover:bg-fidel-600 text-white"
+          className="bg-gradient-to-r from-[#2BD383] to-[#119A8E] hover:from-[#119A8E] hover:to-[#2BD383] text-white rounded-xl"
           disabled={isLoading}
         >
           {isLoading ? "Creating..." : "Create Employee"}

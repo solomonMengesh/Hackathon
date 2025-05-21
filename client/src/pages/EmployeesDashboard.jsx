@@ -204,7 +204,7 @@ const EmployeesDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen flex bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen flex bg-gradient-to-r from-[#f9fafb] to-[#f3f4f6] dark:bg-gradient-to-r dark:from-[#22285E] dark:to-[#191D50]">
       <Sidebar
         setShowEmployeeForm={setShowEmployeeForm}
         setShowPayrollForm={setShowPayrollForm}
@@ -212,10 +212,10 @@ const EmployeesDashboard = () => {
         user={user}
       />
       <div className="flex-1 ml-64">
-        <header className="bg-white dark:bg-gray-800 shadow-sm">
+        <header className="bg-gradient-to-l from-[#ffffff] to-[#f8f9fa] dark:bg-gradient-to-l dark:from-[#191D50] dark:to-[#8C91C4] shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-              Employee Management Dashboard
+              Employee List Dashboard
             </h1>
             <ThemeToggle />
           </div>

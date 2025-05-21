@@ -18,7 +18,7 @@ const PayrollForm = ({ payrollFormData, handlePayrollInputChange, handlePayrollS
               value={payrollFormData.employeeId}
               onChange={handlePayrollInputChange}
               required
-              className="glass-input w-full p-2 rounded-md"
+              className="w-full p-2 rounded-md glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
               disabled={isLoading}
             >
               <option value="">Select Employee</option>
@@ -39,7 +39,7 @@ const PayrollForm = ({ payrollFormData, handlePayrollInputChange, handlePayrollS
               onChange={handlePayrollInputChange}
               required
               placeholder="YYYY-MM"
-              className="glass-input"
+              className="w-full p-2 rounded-md glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
               disabled={isLoading}
             />
           </div>
@@ -54,7 +54,7 @@ const PayrollForm = ({ payrollFormData, handlePayrollInputChange, handlePayrollS
               onChange={handlePayrollInputChange}
               required
               placeholder="Enter working days"
-              className="glass-input"
+              className="w-full p-2 rounded-md glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
               disabled={isLoading}
             />
           </div>
@@ -69,7 +69,7 @@ const PayrollForm = ({ payrollFormData, handlePayrollInputChange, handlePayrollS
               onChange={handlePayrollInputChange}
               required
               placeholder="Enter position allowance"
-              className="glass-input"
+              className="w-full p-2 rounded-md glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
               step="0.01"
               disabled={isLoading}
             />
@@ -85,7 +85,7 @@ const PayrollForm = ({ payrollFormData, handlePayrollInputChange, handlePayrollS
               onChange={handlePayrollInputChange}
               required
               placeholder="Enter transport allowance"
-              className="glass-input"
+              className="w-full p-2 rounded-md glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
               step="0.01"
               disabled={isLoading}
             />
@@ -101,7 +101,7 @@ const PayrollForm = ({ payrollFormData, handlePayrollInputChange, handlePayrollS
               onChange={handlePayrollInputChange}
               required
               placeholder="Enter other commission"
-              className="glass-input"
+              className="w-full p-2 rounded-md glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
               step="0.01"
               disabled={isLoading}
             />
@@ -109,7 +109,7 @@ const PayrollForm = ({ payrollFormData, handlePayrollInputChange, handlePayrollS
         </div>
         <Button
           type="submit"
-          className="bg-fidel-500 hover:bg-fidel-600 text-white"
+          className="bg-gradient-to-r from-[#2BD383] to-[#119A8E] hover:from-[#119A8E] hover:to-[#2BD383] text-white rounded-xl"
           disabled={isLoading}
         >
           {isLoading ? "Submitting..." : "Submit Payroll"}
