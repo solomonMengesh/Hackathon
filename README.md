@@ -1,3 +1,6 @@
+# Smart Payroll System for Qelem Meds Technologies
+![Qelem-meda-logo](assets/Qlogo.png)
+
 Admin 1: Qelem
 Role: To prepare Payroll
 Password: @Qelem123
@@ -15,4 +18,8 @@ then
 `npm install`
 `npm start`
 
-Then you will be able to acces our Payrol System.
+Then you will be able to acces our Payroll System.
+
+# UI Design Sample
+
+![Login-page-Ui](assets/Login-Page.png)
