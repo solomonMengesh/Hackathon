@@ -13,6 +13,7 @@ import { protect, authorize } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
   router.post('/', protect, authorize('preparedBy'), createPayroll);
-
+router.get('/get', protect, authorize('preparedBy', 'approvedBy'), getPayrolls);
+router.put('/:id', protect, authorize('preparedBy'), updatePayroll);
 
 export default router;
