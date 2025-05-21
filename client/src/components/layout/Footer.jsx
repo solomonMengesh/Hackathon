@@ -21,8 +21,8 @@ const Footer = () => {
               to="/" 
               className="text-2xl font-display font-bold text-slate-900 dark:text-white flex items-center"
             >
-              <span className="bg-fidel-500 text-white h-8 w-8 rounded-lg flex items-center justify-center mr-2 shadow-lg">F</span>
-              Fidel<span className="text-fidel-500">Hub</span>
+              <span className="bg-fidel-500 text-white h-8 w-8 rounded-lg flex items-center justify-center mr-2 shadow-lg">Q</span>
+              Qelem<span className="text-fidel-500">Meda</span>
             </Link>
             <p className="mt-4 text-muted-foreground text-sm">
               A modern, interactive learning platform designed to enhance the education experience for students.

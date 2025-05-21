@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Sinup";
 import { Toaster } from "./components/ui/sonner";
 import Index from "./pages/Index";
+import EmployeesDashboard from "./pages/EmployeesDashboard";
 
 
 const MainLayout = ({ children }) => (
@@ -50,7 +51,7 @@ const App = () => {
             </MainLayout>
           }
         />
-
+<Route path="/employee-management" element={<EmployeesDashboard />} />
        
       </Routes>
 
@@ -60,3 +61,13 @@ const App = () => {
 };
 
 export default App;
+
+
+
+
+
+
+
+
+
+

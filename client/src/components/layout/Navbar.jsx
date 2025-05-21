@@ -15,8 +15,7 @@ const Navbar = () => {
 
    const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Courses", href: "/courses" },
-    { name: "About", href: "/about" },
+     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -82,9 +81,9 @@ const Navbar = () => {
           className="text-2xl font-display font-bold text-fidel-900 dark:text-white flex items-center"
         >
           <span className="bg-fidel-500 text-white h-8 w-8 rounded-lg flex items-center justify-center mr-2 shadow-lg">
-            F
+            Q
           </span>
-          Fidel<span className="text-fidel-500">Hub</span>
+          Qlem<span className="text-fidel-500">Meda</span>
         </Link>
 
         {/* Desktop Navigation */}
