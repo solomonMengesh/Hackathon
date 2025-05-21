@@ -9,7 +9,7 @@ export const protect = asyncHandler(async (req, res, next) => {
       token = req.headers.authorization.split(' ')[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       
-      console.log('Looking for user ID:', decoded.userId);  
+     
       
       req.user = await User.findById(decoded.userId).select('-password');
       
@@ -19,7 +19,7 @@ export const protect = asyncHandler(async (req, res, next) => {
         throw new Error('User not found');
       }
       
-      console.log('User authenticated:', req.user._id); 
+
       next();
     } catch (error) {
       console.error('Auth Error:', error.message);

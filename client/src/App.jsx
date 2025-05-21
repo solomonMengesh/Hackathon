@@ -7,7 +7,7 @@ import Signup from "./pages/Sinup";
 import { Toaster } from "./components/ui/sonner";
 import Index from "./pages/Index";
 import EmployeesDashboard from "./pages/EmployeesDashboard";
-
+import ApprovedByDashboard from "./pages/ApprovedByDashboard";
 
 const MainLayout = ({ children }) => (
   <>
@@ -52,6 +52,15 @@ const App = () => {
           }
         />
 <Route path="/employee-management" element={<EmployeesDashboard />} />
+        <Route path="/payroll-approval" element={<ApprovedByDashboard />} />
+        <Route
+          path="*"
+          element={
+            <MainLayout>
+              <h1>404 - Page Not Found</h1>
+            </MainLayout>
+          }
+        />
        
       </Routes>
 

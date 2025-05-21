@@ -26,113 +26,118 @@ const Login = () => {
   }, [searchParams]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+  e.preventDefault();
+  setIsLoading(true);
 
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        {
-          username,
-          email,
-          password,
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/login",
+      {
+        username,
+        email,
+        password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      // Log response for debugging
-      console.log("Login response:", JSON.stringify(response.data, null, 2));
-
-      // Extract token and role
-      const { token, role } = response.data;
-
-      if (!token) {
-        throw new Error("Invalid login response: Missing token");
       }
+    );
 
-      // Decode JWT to get user details
-      let decoded;
-      try {
-        decoded = jwtDecode(token);
-      } catch (err) {
-        throw new Error("Invalid login response: Failed to decode token");
-      }
+    console.log("Login response:", JSON.stringify(response.data, null, 2));
 
-      if (!decoded.userId || !decoded.role) {
-        throw new Error("Invalid login response: Incomplete token data");
-      }
+    const { token, role } = response.data;
 
-      // Create synthetic user object
-      const user = {
-        username: username, // Use input username since backend doesn't return it
-        _id: decoded.userId,
-        role: role || decoded.role,
-      };
+    if (!token) {
+      throw new Error("Invalid login response: Missing token");
+    }
 
-      toast.success(`Welcome, ${user.username}! Redirecting to Employee Management...`);
+    let decoded;
+    try {
+      decoded = jwtDecode(token);
+    } catch (err) {
+      throw new Error("Invalid login response: Failed to decode token");
+    }
 
-      // Store token and user data
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+    if (!decoded.userId || !decoded.role) {
+      throw new Error("Invalid login response: Incomplete token data");
+    }
 
-      // Redirect to employee-management
+    const user = {
+      username: username,
+      _id: decoded.userId,
+      role: role || decoded.role,
+    };
+
+    toast.success(`Welcome, ${user.username}! Redirecting...`);
+
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
+
+    if (user.role === "preparedBy") {
       navigate("/employee-management", {
         replace: true,
         state: { freshLogin: true },
       });
-    } catch (error) {
-      let errorMessage = "Login failed. Please try again.";
+    } else if (user.role === "approvedBy") {
+      navigate("/payroll-approval", {
+        replace: true,
+        state: { freshLogin: true },
+      });
+    } else {
+      toast.error("Unknown role. Please contact the administrator.");
+    }
 
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          switch (error.response.status) {
-            case 400:
-              errorMessage =
-                error.response.data.message || "Invalid request data";
-              break;
-            case 401:
-              errorMessage = "Invalid username, email, or password";
-              break;
-            case 403:
-              errorMessage =
-                error.response.data.message ||
-                "Your account is restricted or pending approval";
-              break;
-            case 404:
-              errorMessage = "User not found";
-              break;
-            case 422:
-              errorMessage =
-                error.response.data.message ||
-                "Account not linked to an employee record";
-              break;
-            case 429:
-              errorMessage = "Too many attempts. Please try again later.";
-              break;
-            default:
-              errorMessage =
-                error.response.data.message ||
-                `Unexpected error (Status: ${error.response.status})`;
-          }
-        } else if (error.request) {
-          errorMessage = "No response from server. Please check your connection.";
-        } else {
-          errorMessage = error.message || errorMessage;
+  } catch (error) {
+    let errorMessage = "Login failed. Please try again.";
+
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        switch (error.response.status) {
+          case 400:
+            errorMessage =
+              error.response.data.message || "Invalid request data";
+            break;
+          case 401:
+            errorMessage = "Invalid username, email, or password";
+            break;
+          case 403:
+            errorMessage =
+              error.response.data.message ||
+              "Your account is restricted or pending approval";
+            break;
+          case 404:
+            errorMessage = "User not found";
+            break;
+          case 422:
+            errorMessage =
+              error.response.data.message ||
+              "Account not linked to an employee record";
+            break;
+          case 429:
+            errorMessage = "Too many attempts. Please try again later.";
+            break;
+          default:
+            errorMessage =
+              error.response.data.message ||
+              `Unexpected error (Status: ${error.response.status})`;
         }
+      } else if (error.request) {
+        errorMessage = "No response from server. Please check your connection.";
       } else {
         errorMessage = error.message || errorMessage;
       }
-
-      toast.error(errorMessage);
-      console.error("Login error:", error);
-    } finally {
-      setIsLoading(false);
+    } else {
+      errorMessage = error.message || errorMessage;
     }
-  };
+
+    toast.error(errorMessage);
+    console.error("Login error:", error);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">

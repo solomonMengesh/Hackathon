@@ -27,7 +27,7 @@ const formSchema = z.object({
       "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
     ),
   confirmPassword: z.string(),
-  role: z.enum(["preparedBy", "other"]),
+  role: z.enum(["preparedBy", "approvedBy"]),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -164,7 +164,7 @@ const Signup = () => {
                   </SelectTrigger>
                   <SelectContent className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
                     <SelectItem value="preparedBy">Prepared By</SelectItem>
-                    <SelectItem value="other">approvedBy</SelectItem>
+                    <SelectItem value="approvedBy">approvedBy</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
