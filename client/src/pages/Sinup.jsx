@@ -119,7 +119,7 @@ const Signup = () => {
             className="glass-card p-6 md:p-8 shadow-lg"
           >
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              {/* Username Field */}
+             
               <div>
                 <label
                   htmlFor="username"
@@ -147,7 +147,6 @@ const Signup = () => {
                 )}
               </div>
 
-              {/* Role Selection */}
               <div>
                 <label
                   htmlFor="role"
@@ -169,7 +168,6 @@ const Signup = () => {
                 </Select>
               </div>
 
-              {/* Password Field */}
               <div>
                 <label
                   htmlFor="password"
@@ -205,7 +203,6 @@ const Signup = () => {
                 )}
               </div>
 
-              {/* Confirm Password Field */}
               <div>
                 <label
                   htmlFor="confirmPassword"
@@ -247,7 +244,6 @@ const Signup = () => {
                 )}
               </div>
 
-              {/* Submit Button */}
               <div className="pt-2">
                 <Button
                   type="submit"

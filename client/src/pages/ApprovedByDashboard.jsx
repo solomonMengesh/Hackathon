@@ -68,11 +68,7 @@ const ApprovedByDashboard = () => {
     const parsedUser = JSON.parse(storedUser);
 
     
-    // if (parsedUser.role !== "approvedBy") {
-    //   toast.error("Unauthorized access");
-    //   navigate("/login", { replace: true });
-    //   return;
-    // }
+
 
     setUser(parsedUser);
     fetchPayrolls(token);

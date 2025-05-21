@@ -67,42 +67,12 @@ const Sidebar = ({ setShowEmployeeForm, setShowPayrollForm, handleLogout, user }
             </Button>
           </li>
 
-          {/* <li>
-            <Button
-              variant="ghost"
-              className="w-full flex items-center justify-between px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-200 transition-colors"
-            >
-              <div className="flex items-center gap-3">
-                <div className="bg-purple-50 dark:bg-purple-900/30 p-2 rounded-lg">
-                  <Users size={18} className="text-purple-500 dark:text-purple-400" />
-                </div>
-                <span className="font-medium">Team Management</span>
-              </div>
-              <ChevronRight size={16} className="text-slate-400" />
-            </Button>
-          </li> */}
+         
         </ul>
 
-        {/* <h3 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider px-4 mt-6 mb-2">
-          Reports
-        </h3> */}
+        
 
-        <ul className="space-y-1">
-          {/* <li>
-            <Button
-              variant="ghost"
-              className="w-full flex items-center justify-between px-4 py-3 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-200 transition-colors"
-            >
-              <div className="flex items-center gap-3">
-                <div className="bg-amber-50 dark:bg-amber-900/30 p-2 rounded-lg">
-                  <DollarSign size={18} className="text-amber-500 dark:text-amber-400" />
-                </div>
-                <span className="font-medium">Payroll History</span>
-              </div>
-              <ChevronRight size={16} className="text-slate-400" />
-            </Button>
-          </li> */}
-        </ul>
+       
       </nav>
 
       <div className="p-4 border-t border-slate-100 dark:border-gray-700">
