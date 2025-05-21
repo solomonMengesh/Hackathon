@@ -43,18 +43,13 @@ const DashSidebasr = () => {
     <Sidebar className='w-full md:w-50 rounded-lg '> 
       <SidebarItems>
 <SidebarItemGroup className='flex flex-col gap-3'>
-{currentUser?.roles==="Admin" && <span className='font-bold flex flex-col gap-2'>
+{ currentUser.rest.position && <span className='font-bold flex flex-col gap-2'>
       <Link to="/Dashboard?tab=dash"><SidebarItem active={tab==="dash"} icon={HiChartPie} as="div" className=' font-serif'>Dashboard</SidebarItem></Link>
       <Link to="/Dashboard?tab=profile"><SidebarItem active={tab==="profile"} icon={HiUser} as="div" className=' font-serif' label={currentUser.roles}>profile</SidebarItem></Link>
-      <Link to="/Dashboard?tab=program"><SidebarItem active={tab==="program"} icon={RiMiniProgramFill} as="div" className=' font-serif'>ProgramsManagment</SidebarItem></Link>
-      <Link to="/Dashboard?tab=assign"><SidebarItem active={tab==="assign"} icon={CgAssign } as="div" className=' font-serif'>Assign Advisor  & Approvement</SidebarItem></Link>
-      <Link to="/Dashboard?tab=report"><SidebarItem active={tab==="report"} icon={GiProgression } as="div" className=' font-serif'>Reports & Analytics</SidebarItem></Link>
-      <Link to="/Dashboard?tab=ApprovedFacality"><SidebarItem active={tab==="ApprovedFacality"} icon={MdOutlineMapsHomeWork  } as="div" className=' font-serif'>Approved Fcality</SidebarItem></Link>
-      <Link to="/Dashboard?tab=ApprovedAdvisor"><SidebarItem active={tab==="ApprovedAdvisor"} icon={GrUserManager  } as="div" className=' font-serif'>Approved Advisors</SidebarItem></Link>
       <Link to="/Dashboard?tab=ApprovedNormalUser"><SidebarItem active={tab==="ApprovedNormalUser"} icon={FaUserCheck  } as="div" className=' font-serif'>Approved User</SidebarItem></Link>
       </span>}
 
-      {currentUser.roles==="User" && <span className='flex flex-col gap-2'>
+      {currentUser?.position==="CEO" && <span className='flex flex-col gap-2'>
            
       <Link to="/DashboardUser?tab=UserDashboard"><SidebarItem active={tab==="UserDashboard"} icon={HiChartPie} as="div" className=' font-serif'>UserDashboard</SidebarItem></Link>
       <Link to="/DashboardUser?tab=profile"><SidebarItem active={tab==="profile"} icon={HiUser} as="div" label={currentUser.roles} className=' font-serif'>profile</SidebarItem></Link>
@@ -68,7 +63,7 @@ const DashSidebasr = () => {
       </span>}
 
 
-      {currentUser.roles==="Advisor" &&<span className='font-bold flex flex-col gap-2'>
+      {currentUser?.position==="CEO" &&<span className='font-bold flex flex-col gap-2'>
       <Link to="/DashboardAdvisor?tab=AdvisorDashboard"><SidebarItem active={tab==="AdvisorDashboard"} icon={HiChartPie} as="div" className=' font-serif' >AdvisorDashboard</SidebarItem></Link>
       <Link to="/DashboardAdvisor?tab=profile"><SidebarItem active={tab==="profile"} icon={HiUser} as="div" className=' font-serif' label={currentUser.roles}>profile</SidebarItem></Link>
       <Link to="/DashboardAdvisor?tab=Monitoring"><SidebarItem active={tab==="Monitoring"} icon={RiProgress5Line } as="div" className=' font-serif'>Progress Monitoring </SidebarItem></Link>
@@ -76,7 +71,7 @@ const DashSidebasr = () => {
       <Link to="/DashboardAdvisor?tab=Reporting"><SidebarItem active={tab==="Reporting"} icon={SiGoogleanalytics } as="div" className=' font-serif'>Reporting & Analytics</SidebarItem></Link>
       </span>}
 
-      {currentUser.roles==="Faculty" && <span className='flex flex-col gap-3'>
+      {currentUser?.position==="CEO" && <span className='flex flex-col gap-3'>
       <Link to="/DashboardFaculty?tab=FacultyDashboard"><SidebarItem active={tab==="FacultyDashboard"} icon={RiSchoolLine} as="div" className=' font-serif'>FacultyDashboard</SidebarItem></Link>
       <Link to="/DashboardFaculty?tab=profile"><SidebarItem active={tab==="profile"} icon={HiUser} as="div" className=' font-serif' label={currentUser.roles}>profile</SidebarItem></Link>
       <Link to="/DashboardFaculty?tab=InternshepPost"><SidebarItem active={tab==="InternshepPost"} icon={MdSignpost } as="div" className=' font-serif'>InternshepPost </SidebarItem></Link>

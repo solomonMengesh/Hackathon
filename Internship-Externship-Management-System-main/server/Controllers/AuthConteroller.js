@@ -100,10 +100,7 @@ export const SignIn = async (req, res, next) => {
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict'
       })
-      .json({
-        success: true,
-        user: rest
-      });
+      .json({rest});
   } catch (error) {
     console.error("SignIn error:", error);
     next(ErrorHandler(500, "Internal server error"));

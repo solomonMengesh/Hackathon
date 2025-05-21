@@ -22,7 +22,8 @@ const SignIn = () => {
     password: "",
     position: "", // Consistent field name
   });
-  console.log("formData", formData)
+  console.log("currentUser....", currentUser)
+  console.log("currentUser position title:", currentUser.rest.position);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });

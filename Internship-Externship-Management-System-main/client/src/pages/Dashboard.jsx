@@ -31,10 +31,6 @@ const Dashboard = () => {
     <div className=''>{tab==="dash" && <AdminDashboard />}</div>
     <div className=''>{tab==="profile" && <DashProfile />}</div>
     <div className=''>{tab==="program" && <ProgramsManagment />}</div>
-    <div className=''>{tab==="assign" && <Assigning />}</div>
-    <div className=''>{tab==="report" && <ReportAnalytics />}</div>
-    <div className=''>{tab==="ApprovedFacality" && <ApprovedFacality />}</div>
-    <div className=''>{tab === "ApprovedAdvisor" && <ApprovedAdvisor />}</div>
     <div className=''>{tab === "ApprovedNormalUser" && <ApprovedNormalUser />}</div>
   
 </div>

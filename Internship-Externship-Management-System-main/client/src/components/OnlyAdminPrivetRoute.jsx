@@ -6,7 +6,7 @@ const OnlyAdminPrivetRoute = () => {
       const { currentUser } = useSelector((state) => state.user);
   return (
     <div>
-{currentUser.roles==="Admin" ? <Outlet/> : <Navigate to="/SignIn"/>}
+{currentUser?.position==="CEO" ? <Outlet/> : <Navigate to="/SignIn"/>}
     </div>
   )
 }
