@@ -1,7 +1,7 @@
-#Team Members
-#kaleb Tesafye <br>
-#solomon Mengesha
-#Ahmed Umer
+# Team Members <br>
+# kaleb Tesafye <br>
+# solomon Mengesha <br>
+# Ahmed Umer <br>
 
 # Smart Payroll System for Qelem Meds Technologies
 ![Qelem-meda-logo](assets/Qlogo.png)
