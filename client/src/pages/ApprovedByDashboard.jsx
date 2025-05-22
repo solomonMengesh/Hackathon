@@ -99,8 +99,8 @@ const ApprovedByDashboard = () => {
     try {
       const token = localStorage.getItem("token");
 
-      await axios.patch(
-        `http://localhost:5000/api/payroll/${payrollId}`,
+      await axios.put(
+        `http://localhost:5000/api/payroll/approve/${payrollId}`,
         { status: "approved" },
         {
           headers: {
