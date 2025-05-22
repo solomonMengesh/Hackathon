@@ -53,7 +53,7 @@ const EmployeeList = ({ employees, isLoading }) => {
                   <td className="px-4 py-3">{employee.position}</td>
                   <td className="px-4 py-3">{employee.employmentType}</td>
                   <td className="px-4 py-3">{new Date(employee.employmentDate).toLocaleDateString()}</td>
-                  <td className="px-4 py-3">${employee.basicSalary}</td>
+                  <td className="px-4 py-3">ETB {employee.basicSalary}</td>
                   <td className="px-4 py-3">{employee.bankAccountNumber}</td>
                 </tr>
               ))}
