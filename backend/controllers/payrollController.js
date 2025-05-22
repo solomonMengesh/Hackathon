@@ -1,6 +1,8 @@
+ import PDFDocument from 'pdfkit';
+
 import PayrollRecord from '../models/Payroll.js';
 import Employee from '../models/Employee.js';
-
+ 
 const positionAllowanceRates = {
   CEO: 0.10,     
   COO: 0.07,
@@ -56,7 +58,7 @@ export const createPayrollRecord = async (req, res) => {
 
     const payrollRecord = new PayrollRecord({
       employee: employee._id,
-      month,
+       
       workingDays,
       earnedSalary,
       positionAllowance,
@@ -77,6 +79,11 @@ export const createPayrollRecord = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+
+
+
+
 
 export const getPayrollRecords = async (req, res) => {
   try {
@@ -110,42 +117,59 @@ export const approvePayrollRecord = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+ 
 
-export const getPayrollById = async (req, res) => {
+ 
+
+export const generatePayrollExcelReport = async (req, res) => {
   try {
     const { id } = req.params;
-    const record = await PayrollRecord.findById(id)
-      .populate('employee')
-      .populate('preparedBy', 'username role')
-      .populate('approvedBy', 'username role');
 
-    if (!record) {
-      return res.status(404).json({ message: 'Payroll record not found' });
-    }
+    const payroll = await PayrollRecord.findById(id).populate('employee');
+    if (!payroll) return res.status(404).json({ message: 'Payroll record not found' });
 
+    const doc = new PDFDocument({ margin: 50 });
 
-    res.json(record);
+    
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename=payroll-${payroll.employee.name}-${payroll.month}.pdf`
+    );
+
+    doc.pipe(res);
+
+    doc.fontSize(20).text('Payroll Report', { align: 'center' });
+    doc.moveDown();
+
+    const addRow = (label, value) => {
+      doc.fontSize(12).text(`${label}: ${value}`);
+    };
+
+    addRow('Employee Name', payroll.employee.name);
+    addRow('Gender', payroll.employee.gender);
+    addRow('Position', payroll.employee.position);
+    addRow('Month', payroll.month);
+    addRow('Working Days', payroll.workingDays);
+    addRow('Basic Salary', payroll.employee.basicSalary);
+    addRow('Earned Salary', payroll.earnedSalary);
+    addRow('Position Allowance', payroll.positionAllowance);
+    addRow('Transport Allowance', payroll.transportAllowance);
+    addRow('Other Commission', payroll.otherCommission);
+    addRow('Gross Pay', payroll.grossPay);
+    addRow('Taxable Income', payroll.taxableIncome);
+    addRow('Tax', payroll.deductions.tax);
+    addRow('Pension', payroll.deductions.pension);
+    addRow('Total Deduction', payroll.totalDeduction);
+    addRow('Net Payment', payroll.netPayment);
+    addRow('Prepared By', payroll.preparedBy);
+    addRow('Status', payroll.status);
+
+    doc.end();
+
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('PDF generation error:', err);
+    res.status(500).json({ message: 'Error generating PDF report', error: err.message });
   }
 };
 
-export const updatePayrollRecord = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const updates = req.body;
-
-    const record = await PayrollRecord.findByIdAndUpdate(id, updates, {
-      new: true,
-      runValidators: true,
-    });
-
-    if (!record) {
-      return res.status(404).json({ message: 'Payroll record not found' });
-    }
-
-    res.json(record);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};

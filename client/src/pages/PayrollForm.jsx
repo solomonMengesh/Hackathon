@@ -29,7 +29,7 @@ const PayrollForm = ({ payrollFormData, handlePayrollInputChange, handlePayrollS
               ))}
             </select>
           </div>
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
               Month
             </label>
@@ -37,12 +37,12 @@ const PayrollForm = ({ payrollFormData, handlePayrollInputChange, handlePayrollS
               name="month"
               value={payrollFormData.month}
               onChange={handlePayrollInputChange}
-              required
+            
               placeholder="YYYY-MM"
               className="w-full p-2 rounded-md glass-input dark:bg-[#353E88] dark:border-none rounded-xl dark:text-slate-400"
               disabled={isLoading}
             />
-          </div>
+          </div> */}
           <div>
             <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
               Working Days

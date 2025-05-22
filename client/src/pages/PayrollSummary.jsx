@@ -11,10 +11,10 @@ const PayrollSummary = ({ payrollData }) => {
               <td className="px-4 py-3 font-medium">Employee ID</td>
               <td className="px-4 py-3">{payrollData.employee}</td>
             </tr>
-            <tr className="border-b dark:border-gray-700">
+            {/* <tr className="border-b dark:border-gray-700">
               <td className="px-4 py-3 font-medium">Month</td>
               <td className="px-4 py-3">{payrollData.month}</td>
-            </tr>
+            </tr> */}
             <tr className="border-b dark:border-gray-700">
               <td className="px-4 py-3 font-medium">Working Days</td>
               <td className="px-4 py-3">{payrollData.workingDays}</td>
