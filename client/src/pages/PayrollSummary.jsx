@@ -21,50 +21,50 @@ const PayrollSummary = ({ payrollData }) => {
             </tr>
             <tr className="border-b dark:border-gray-700">
               <td className="px-4 py-3 font-medium">Earned Salary</td>
-              <td className="px-4 py-3">${payrollData.earnedSalary.toFixed(2)}</td>
+              <td className="px-4 py-3">ETB {payrollData.earnedSalary.toFixed(2)}  </td>
             </tr>
             <tr className="border-b dark:border-gray-700">
               <td className="px-4 py-3 font-medium">Position Allowance</td>
-              <td className="px-4 py-3">${payrollData.positionAllowance.toFixed(2)}</td>
+              <td className="px-4 py-3">ETB {payrollData.positionAllowance.toFixed(2)}  </td>
             </tr>
             <tr className="border-b dark:border-gray-700">
               <td className="px-4 py-3 font-medium">Transport Allowance</td>
-              <td className="px-4 py-3">${payrollData.transportAllowance.toFixed(2)}</td>
+              <td className="px-4 py-3">ETB {payrollData.transportAllowance.toFixed(2)}  </td>
             </tr>
             <tr className="border-b dark:border-gray-700">
               <td className="px-4 py-3 font-medium">Other Commission</td>
-              <td className="px-4 py-3">${payrollData.otherCommission.toFixed(2)}</td>
+              <td className="px-4 py-3">ETB {payrollData.otherCommission.toFixed(2)}  </td>
             </tr>
             <tr className="border-b dark:border-gray-700">
               <td className="px-4 py-3 font-medium">Gross Pay</td>
-              <td className="px-4 py-3">${payrollData.grossPay.toFixed(2)}</td>
+              <td className="px-4 py-3">ETB {payrollData.grossPay.toFixed(2)}  </td>
             </tr>
             <tr className="border-b dark:border-gray-700">
               <td className="px-4 py-3 font-medium">Taxable Income</td>
-              <td className="px-4 py-3">${payrollData.taxableIncome.toFixed(2)}</td>
+              <td className="px-4 py-3">ETB {payrollData.taxableIncome.toFixed(2)}  </td>
             </tr>
             <tr className="border-b dark:border-gray-700">
               <td className="px-4 py-3 font-medium">Tax Deduction</td>
-              <td className="px-4 py-3">${payrollData.deductions.tax.toFixed(2)}</td>
+              <td className="px-4 py-3">ETB {payrollData.deductions.tax.toFixed(2)}  </td>
             </tr>
             <tr className="border-b dark:border-gray-700">
               <td className="px-4 py-3 font-medium">Pension Deduction</td>
-              <td className="px-4 py-3">${payrollData.deductions.pension.toFixed(2)}</td>
+              <td className="px-4 py-3">ETB {payrollData.deductions.pension.toFixed(2)}  </td>
             </tr>
             <tr className="border-b dark:border-gray-700">
               <td className="px-4 py-3 font-medium">Total Deduction</td>
-              <td className="px-4 py-3">${payrollData.totalDeduction.toFixed(2)}</td>
+              <td className="px-4 py-3">ETB {payrollData.totalDeduction.toFixed(2)}  </td>
             </tr>
             <tr className="border-b dark:border-gray-700">
               <td className="px-4 py-3 font-medium">Net Payment</td>
-              <td className="px-4 py-3">${payrollData.netPayment.toFixed(2)}</td>
+              <td className="px-4 py-3">{payrollData.netPayment.toFixed(2)} ETB</td>
             </tr>
             <tr className="border-b dark:border-gray-700">
               <td className="px-4 py-3 font-medium">Status</td>
               <td className="px-4 py-3">{payrollData.status}</td>
             </tr>
             <tr>
-              <td className="px-4 py-3 font-medium">Created At</td>
+              <td className="px-4 py-3 font-medium">Submission Date</td>
               <td className="px-4 py-3">{new Date(payrollData.createdAt).toLocaleString()}</td>
             </tr>
           </tbody>
