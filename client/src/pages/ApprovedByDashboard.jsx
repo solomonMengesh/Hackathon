@@ -11,20 +11,20 @@ const PayrollList = ({ payrolls, isLoading, handleApprovePayroll }) => {
   if (!payrolls.length) return <p>No payrolls found.</p>;
 
   return (
-    <table className="min-w-full bg-white dark:bg-gray-800 rounded shadow overflow-hidden">
-      <thead className="bg-gray-100 dark:bg-gray-700 text-left">
+    <table className="min-w-full bg-white dark:bg-transparent rounded shadow overflow-hidden">
+      <thead className="bg-gray-100 dark:bg-gray-700 text-left dark:text-white">
         <tr>
-          <th className="p-3">Employee</th>
-          <th className="p-3">Month</th>
-          <th className="p-3">Gross Pay</th>
-          <th className="p-3">Net Payment</th>
-          <th className="p-3">Status</th>
-          <th className="p-3">Action</th>
+          <th className="p-3 dark:bg-[#353E88] rounded-l-xl">Employee</th>
+          <th className="p-3 dark:bg-[#353E88]">Month</th>
+          <th className="p-3 dark:bg-[#353E88]">Gross Pay</th>
+          <th className="p-3 dark:bg-[#353E88]">Net Payment</th>
+          <th className="p-3 dark:bg-[#353E88]">Status</th>
+          <th className="p-3 dark:bg-[#353E88] rounded-r-xl">Action</th>
         </tr>
       </thead>
       <tbody>
         {payrolls.map((payroll) => (
-          <tr key={payroll._id} className="border-t border-gray-200 dark:border-gray-700">
+          <tr key={payroll._id} className="border-b border-gray-200 dark:border-gray-700 dark:text-white ">
             <td className="p-3">{payroll.employee.name}</td>
             <td className="p-3">{payroll.month}</td>
             <td className="p-3">{payroll.grossPay.toFixed(2)}</td>
@@ -34,7 +34,7 @@ const PayrollList = ({ payrolls, isLoading, handleApprovePayroll }) => {
               {payroll.status !== "approved" ? (
                 <button
                   onClick={() => handleApprovePayroll(payroll._id)}
-                  className="bg-green-600 hover:bg-green-700 text-white py-1 px-3 rounded"
+                  className="bg-gradient-to-r from-[#2BD383] to-[#119A8E] hover:from-[#119A8E] hover:to-[#2BD383] hover:bg-green-700 text-white py-1 px-3 rounded"
                 >
                   Approve
                 </button>
@@ -157,10 +157,10 @@ const ApprovedByDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen flex bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen flex bg-gray-50 bg-gradient-to-l dark:from-[#22285E] dark:to-[#191D50]">
       <Sidebar handleLogout={handleLogout} user={user} />
       <div className="flex-1 ml-64">
-        <header className="bg-white dark:bg-gray-800 shadow-sm">
+        <header className="bg-gradient-to-l from-[#ffffff] to-[#f8f9fa] dark:bg-gradient-to-l dark:from-[#191D50] dark:to-[#8C91C4] shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
               Payroll Approval Dashboard
