@@ -1,5 +1,1 @@
- <aside className="w-50 bg-gradient-to-b from-white to-slate-50 dark:from-gray-200 dark:to-gray-500 shadow-xl h-screen fixed top-0 left-0 flex flex-col border-r border-slate-100 dark:border-gray-700 transition-all duration-300 hover:shadow-2xl">
-      
-dark:from-gray-200 dark:to-gray-500
 
-i want this section to chage to this colors  22285E, 191D50
