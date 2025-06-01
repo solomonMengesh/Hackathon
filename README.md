@@ -53,6 +53,6 @@ You can now access the full **Smart Payroll System** in your browser.
 - Clean and responsive UI
 - Built using **MERN Stack** (MongoDB, Express, React, Node.js)
 
-## 💡 Hackathon Context
+## 💡 Hackathon Context    
 
 This project was developed for the **Qelem Meda Technologies Hackathon** hosted at **Wollo University**. It addresses real-world payroll challenges with simplicity and security in mind.
