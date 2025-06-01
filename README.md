@@ -1,7 +1,7 @@
 
 # 🚀 Smart Payroll System for Qelem Meda Technologies
 
-![Qelem Meda Logo](assets/Qlogo.png)
+![Qelem Meda Logo](assets/Qlogo.pn)
 
 A modern, secure, and efficient **Payroll Management System** built for Qelem Meda Technologies as part of the **Wollo University Hackathon Challenge**. Designed to automate salary preparation, approval, and distribution with a clean UI and a role-based access system.
 
